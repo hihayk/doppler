@@ -3,6 +3,9 @@ import './App.css';
 import Input from './input';
 import styled from 'styled-components';
 
+const lineBreak = `
+`
+
 const SettingTitle = styled.div`
   opacity: 0.5;
   font-size: 1.2rem;
@@ -62,6 +65,32 @@ const text = {
   l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
 };
 
+const getTextSizes = (amount, base, increment) => {
+  let textSizes = [];
+
+  const getName = inc => {
+    return `textSize-${inc}`;
+  };
+
+  for (var i = 1; i < amount; i++) {
+    textSizes[i] = {
+      name: `--${getName(i)}`,
+      value: `calc(var(--${getName(i - 1)}) * var(--sizesIncrement))`,
+      number: i
+    };
+  }
+
+  textSizes[0] = {
+    name: `--${getName(0)}`,
+    value: `${base}rem`,
+    number: 0
+  };
+
+  document.documentElement.style.setProperty('--sizesIncrement', increment);
+  
+  return textSizes;
+};
+
 function App() {
   const [sizesAmount, setSizesAmount] = useState(4);
   const [sizesIncrement, setSizesIncrement] = useState(1.3);
@@ -71,28 +100,6 @@ function App() {
 
   document.documentElement.style.setProperty(`--textSize-0`, `baseSizerem`);
 
-  const getTextSizes = (amount, base, increment) => {
-    let textSizes = [];
-
-    const getName = inc => {
-      return `textSize-${inc}`;
-    };
-
-    for (var i = 1; i < amount; i++) {
-      textSizes[i] = {
-        name: `--${getName(i)}`,
-        value: `calc(var(--${getName(i - 1)}) * ${increment})`
-      };
-    }
-
-    textSizes[0] = {
-      name: `--${getName(0)}`,
-      value: `${base}rem`
-    };
-
-    return textSizes;
-  };
-
   getTextSizes(sizesAmount, baseSize, sizesIncrement).map(size => {
     document.documentElement.style.setProperty(size.name, size.value);
   });
@@ -100,7 +107,7 @@ function App() {
   getTextSizes(sizesAmount, baseSize, sizesIncrement);
 
   return (
-    <div className="App">
+    <div>
       <GlobalContainer>
         <SettingsSection>
           <Logo>doppler</Logo>
@@ -123,7 +130,7 @@ function App() {
           />
           <br />
 
-        <SettingTitle>Text size</SettingTitle>
+          <SettingTitle>Text size</SettingTitle>
           <Input
             type="number"
             onChange={e => setSizesAmount(e.target.value)}
@@ -148,19 +155,48 @@ function App() {
         </SettingsSection>
 
         <MainSection>
+          <pre>
+            <code>
+              {`:root {
+  --lineHeightBase: ${lineHeightBase}rem;
+  --lineHeightRelativity: ${lineHeightRelativity}em;
+  --sizesIncrement: ${sizesIncrement};
+
+${getTextSizes(sizesAmount, baseSize, sizesIncrement)
+    .reverse()
+    .map((size, index) => {
+      return `  ${size.name}: ${size.value}; ${index < getTextSizes.length ? lineBreak : ''}`
+    }).join('')}
+}
+
+${getTextSizes(sizesAmount, baseSize, sizesIncrement)
+  .reverse()
+  .map((size) => {
+    return `.textSize-${size.number} { font-size: var(${size.name}); }${lineBreak}`
+  }).join('')
+}
+${getTextSizes(sizesAmount, baseSize, sizesIncrement)
+  .reverse()
+  .map((size, index) => {
+    return `.textSize-${size.number}${index < getTextSizes.length ? ',' + lineBreak : ' {'}`
+  }).join('')
+}
+  line-height: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
+}
+`}
+            </code>
+          </pre>
           {getTextSizes(sizesAmount, baseSize, sizesIncrement)
             .reverse()
             .map(size => (
               <div
               style={{
                 fontSize: `var(${size.name})`,
-                lineHeight: `calc(${lineHeightBase}em + ${lineHeightRelativity}rem)`,
+                lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
                 maxWidth: "24em",
                 marginBottom: "1.5rem"
               }}
               >
-                Aa 123
-                <br />
                 {text.m}
               </div>
             ))}
