@@ -28,12 +28,12 @@ const InputField = styled.input`
     pointer-events: none;
   `};
   &:hover {
-    color: hsla(328, 100%, 45%, 1);
+    color: hsla(332, 100%, 45%, 1);
   }
   &:focus {
     outline: none;
-    background-color: hsla(328, 100%, 45%, 1);
-    color: hsla(328, 100%, 93%, 1);
+    background-color: hsla(332, 100%, 45%, 1);
+    color: hsla(332, 100%, 93%, 1);
   }
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -41,10 +41,10 @@ const InputField = styled.input`
     margin: 0;
   }
   &::-moz-selection {
-    background-color: hsla(328, 100%, 45%, 1);
+    background-color: hsla(332, 100%, 45%, 1);
   }
   &::selection {
-    background-color: hsla(328, 100%, 45%, 1);
+    background-color: hsla(332, 100%, 45%, 1);
   }
 `
 

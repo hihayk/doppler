@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import Input from './input';
 import styled from 'styled-components';
-
-const lineBreak = `
-`
+import CodeGetter from './code-getter';
+import { getFontSizes } from './utilities';
 
 const SettingTitle = styled.div`
   opacity: 0.5;
@@ -63,32 +62,6 @@ const MainSection = styled.div`
 const text = {
   m: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset`,
   l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
-};
-
-const getFontSizes = (amount, base, increment) => {
-  let fontSizes = [];
-
-  const getName = inc => {
-    return `fontSize-${inc}`;
-  };
-
-  for (var i = 1; i < amount; i++) {
-    fontSizes[i] = {
-      name: `--${getName(i)}`,
-      value: `calc(var(--${getName(i - 1)}) * var(--sizesIncrement))`,
-      number: i
-    };
-  }
-
-  fontSizes[0] = {
-    name: `--${getName(0)}`,
-    value: `${base}rem`,
-    number: 0
-  };
-
-  document.documentElement.style.setProperty('--sizesIncrement', increment);
-  
-  return fontSizes;
 };
 
 function App() {
@@ -152,50 +125,28 @@ function App() {
             step=".1"
             sufix="rem"
           />
+          <br />
+          <CodeGetter 
+            lineHeightBase={lineHeightBase}
+            lineHeightRelativity={lineHeightRelativity}
+            sizesIncrement={sizesIncrement}
+            sizesAmount={sizesAmount}
+            baseFontSize={baseFontSize}
+          />
         </SettingsSection>
 
         <MainSection>
-          <pre>
-            <code>
-              {`:root {
-  --lineHeightBase: ${lineHeightBase}rem;
-  --lineHeightRelativity: ${lineHeightRelativity}em;
-  --sizesIncrement: ${sizesIncrement};
-
-${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
-    .reverse()
-    .map((size, index) => {
-      return `  ${size.name}: ${size.value}; ${lineBreak}`
-    }).join('')}
-  --globalLineHeight: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
-  --globalFontSize: var(--fontSize-0);
-}
-body {
-  font-size: var(--globalFontSize);
-  line-height: var(--globalLineHeight);
-}
-${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
-  .reverse()
-  .map((size) => {
-    return `.textSize-${size.number} {
-  font-size: var(${size.name});
-  line-height: var(--globalLineHeight);
-}
-`
-  }).join('')
-}`}
-            </code>
-          </pre>
           {getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
             .reverse()
-            .map(size => (
+            .map((size, index) => (
               <div
-              style={{
-                fontSize: `var(${size.name})`,
-                lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
-                maxWidth: "24em",
-                marginBottom: "1.5rem"
-              }}
+                key={index}
+                style={{
+                  fontSize: `var(${size.name})`,
+                  lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
+                  maxWidth: "24em",
+                  marginBottom: "1.5rem"
+                }}
               >
                 {text.m}
               </div>
