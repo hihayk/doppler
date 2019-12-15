@@ -65,22 +65,22 @@ const text = {
   l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
 };
 
-const getTextSizes = (amount, base, increment) => {
-  let textSizes = [];
+const getFontSizes = (amount, base, increment) => {
+  let fontSizes = [];
 
   const getName = inc => {
-    return `textSize-${inc}`;
+    return `fontSize-${inc}`;
   };
 
   for (var i = 1; i < amount; i++) {
-    textSizes[i] = {
+    fontSizes[i] = {
       name: `--${getName(i)}`,
       value: `calc(var(--${getName(i - 1)}) * var(--sizesIncrement))`,
       number: i
     };
   }
 
-  textSizes[0] = {
+  fontSizes[0] = {
     name: `--${getName(0)}`,
     value: `${base}rem`,
     number: 0
@@ -88,30 +88,30 @@ const getTextSizes = (amount, base, increment) => {
 
   document.documentElement.style.setProperty('--sizesIncrement', increment);
   
-  return textSizes;
+  return fontSizes;
 };
 
 function App() {
   const [sizesAmount, setSizesAmount] = useState(4);
   const [sizesIncrement, setSizesIncrement] = useState(1.3);
-  const [baseSize, setBaseSize] = useState(0.9);
+  const [baseFontSize, setBaseFontSize] = useState(0.9);
   const [lineHeightBase, setLineHeightBase] = useState(0.85);
   const [lineHeightRelativity, setLineHeightRelativity] = useState(0.6);
 
-  document.documentElement.style.setProperty(`--textSize-0`, `baseSizerem`);
+  document.documentElement.style.setProperty(`--fontSize-0`, `baseFontSizerem`);
 
-  getTextSizes(sizesAmount, baseSize, sizesIncrement).map(size => {
+  getFontSizes(sizesAmount, baseFontSize, sizesIncrement).map(size => {
     document.documentElement.style.setProperty(size.name, size.value);
   });
 
-  getTextSizes(sizesAmount, baseSize, sizesIncrement);
+  getFontSizes(sizesAmount, baseFontSize, sizesIncrement);
 
   return (
     <div>
       <GlobalContainer>
         <SettingsSection>
           <Logo>doppler</Logo>
-          <SettingTitle>Line height</SettingTitle>
+          <SettingTitle>Line Height</SettingTitle>
           <Input
             type="number"
             onChange={e => setLineHeightBase(e.target.value)}
@@ -130,7 +130,7 @@ function App() {
           />
           <br />
 
-          <SettingTitle>Text size</SettingTitle>
+          <SettingTitle>Font Size</SettingTitle>
           <Input
             type="number"
             onChange={e => setSizesAmount(e.target.value)}
@@ -146,8 +146,8 @@ function App() {
           />
           <Input
             type="number"
-            onChange={e => setBaseSize(e.target.value)}
-            value={baseSize}
+            onChange={e => setBaseFontSize(e.target.value)}
+            value={baseFontSize}
             label="Base"
             step=".1"
             sufix="rem"
@@ -162,31 +162,31 @@ function App() {
   --lineHeightRelativity: ${lineHeightRelativity}em;
   --sizesIncrement: ${sizesIncrement};
 
-${getTextSizes(sizesAmount, baseSize, sizesIncrement)
+${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
     .reverse()
     .map((size, index) => {
-      return `  ${size.name}: ${size.value}; ${index < getTextSizes.length ? lineBreak : ''}`
+      return `  ${size.name}: ${size.value}; ${lineBreak}`
     }).join('')}
+  --globalLineHeight: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
+  --globalFontSize: var(--fontSize-0);
 }
-
-${getTextSizes(sizesAmount, baseSize, sizesIncrement)
+body {
+  font-size: var(--globalFontSize);
+  line-height: var(--globalLineHeight);
+}
+${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
   .reverse()
   .map((size) => {
-    return `.textSize-${size.number} { font-size: var(${size.name}); }${lineBreak}`
+    return `.textSize-${size.number} {
+  font-size: var(${size.name});
+  line-height: var(--globalLineHeight);
+}
+`
   }).join('')
-}
-${getTextSizes(sizesAmount, baseSize, sizesIncrement)
-  .reverse()
-  .map((size, index) => {
-    return `.textSize-${size.number}${index < getTextSizes.length ? ',' + lineBreak : ' {'}`
-  }).join('')
-}
-  line-height: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
-}
-`}
+}`}
             </code>
           </pre>
-          {getTextSizes(sizesAmount, baseSize, sizesIncrement)
+          {getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
             .reverse()
             .map(size => (
               <div
