@@ -9,7 +9,7 @@ const InputWrapper = styled.div`
 
 const InputField = styled.input`
   color: inherit;
-  font-size: 32px;
+  font-size: var(--dpl-fs-2);
   font-family: inherit;
   font-weight: inherit;
   line-height: 1;
@@ -28,12 +28,11 @@ const InputField = styled.input`
     pointer-events: none;
   `};
   &:hover {
-    color: hsla(332, 100%, 45%, 1);
+    color: hsla(var(--c-accentHSL), 1);
   }
   &:focus {
     outline: none;
-    background-color: hsla(332, 100%, 45%, 1);
-    color: hsla(332, 100%, 93%, 1);
+    color: hsla(var(--c-accentHSL), 1);
   }
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -41,15 +40,17 @@ const InputField = styled.input`
     margin: 0;
   }
   &::-moz-selection {
-    background-color: hsla(332, 100%, 45%, 1);
+    background-color: hsla(var(--c-accentHSL), 1);
+    color: hsla(var(--c-accentHS), 93%, 1);
   }
   &::selection {
-    background-color: hsla(332, 100%, 45%, 1);
+    background-color: hsla(var(--c-accentHSL), 1);
+    color: hsla(var(--c-accentHS), 93%, 1);
   }
 `
 
 const InputValue = styled.div`
-  font-size: 32px;
+  font-size: var(--dpl-fs-2);
   font-weight: inherit;
   line-height: 1;
   opacity: 0;
@@ -57,12 +58,13 @@ const InputValue = styled.div`
 `
 
 const InputLabel = styled.label`
-  
+  margin-bottom: 0.1rem;
+  display: block;
 `
 
 const InputRoot = styled.div`
   display: flex;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.8rem 0;
 `
 
 const Input = ({ value, onChange, color, prefix, sufix, withRgbSlider, label, min, max, ...rest }) => {

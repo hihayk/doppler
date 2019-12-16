@@ -1,6 +1,13 @@
 :root {
   --pagePaddingY: 2vw;
   --pagePaddingX: calc(2vw + 1rem);
+
+  --dpl-fs-2: 1.75rem;
+  --dpl-fs-1: 1rem;
+  --dpl-fs-0: 0.75rem;
+
+  --c-accentHS: 332, 100%;
+  --c-accentHSL: var(--c-accentHS), 45%;
 }
 
 
@@ -10,11 +17,11 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.875rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--dpl-fs-0);
   line-height: 1.5;
   margin: 0;
-  color: #343434;
+  color: hsla(0,0%,20%,1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "tnum";

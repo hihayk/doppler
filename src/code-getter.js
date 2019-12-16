@@ -6,8 +6,8 @@ const lineBreak = `
 `
 
 const CodeContainer = styled.pre`
-  background-color: white;
-  padding: 2rem;
+  background-color: hsla(0,0%,100%,1);
+  padding: calc(var(--pagePaddingX) / 1.5);
   overflow: auto;
   max-height: 100%;
 `
@@ -20,12 +20,13 @@ const CodeBackdrop = styled.div`
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 10;
   width: 100%;
   height: 100%;
   align-items: center;
   justify-content: center;
   padding: var(--pagePaddingY) var(--pagePaddingX);
-  background-color: hsla(332, 100%, 45%, 0.41);
+  background-color: hsla(0,0%,0%,0.3);
 `
 
 const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizesAmount, baseFontSize}) => {

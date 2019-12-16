@@ -7,15 +7,19 @@ import { getFontSizes } from './utilities';
 
 const SettingTitle = styled.div`
   opacity: 0.5;
-  font-size: 1.2rem;
+  font-size: var(--dpl-fs-1);
   margin: 0 0 0.5rem 0;
+`
+
+const LogoSection = styled.div`
+  margin: auto 0 1.5rem 0;
 `
 
 const Logo = styled.h1`
   font-weight: normal;
   opacity: 0.5;
-  font-size: 2rem;
-  margin: 0 0 1.5rem 0;
+  font-size: var(--dpl-fs-2);
+  margin: 0 0 0.5rem 0;
 `
 
 const GlobalContainer = styled.div`
@@ -29,6 +33,9 @@ const SettingsSection = styled.div`
   top: 0;
   min-height: 100vh;
   padding: var(--pagePaddingY) var(--pagePaddingX);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   @media (max-width: 800px) {
     background-color: hsla(0,0%,0%,0.2);
@@ -59,17 +66,51 @@ const MainSection = styled.div`
   }
 `
 
+const DemoText = styled.div`
+  &:focus {
+    outline: none;
+  }
+`
+
+const FontFamilyInput = styled.input`
+  font: inherit;
+  padding: 0;
+  background-color: white;
+  border: none;
+  color: inherit;
+  max-width: 100%;
+  font-size: var(--dpl-fs-2);
+  height: calc(1.2 * 1em);
+
+  &:hover {
+    color: hsla(var(--c-accentHSL), 1);
+  }
+  &:focus {
+    outline: none;
+    color: hsla(var(--c-accentHSL), 1);
+  }
+  &::-moz-selection {
+    background-color: hsla(var(--c-accentHSL), 1);
+    color: hsla(var(--c-accentHS), 93%, 1);
+  }
+  &::selection {
+    background-color: hsla(var(--c-accentHSL), 1);
+    color: hsla(var(--c-accentHS), 93%, 1);
+  }
+`
+
 const text = {
-  m: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset`,
+  m: `The pattern produced by the bug's shaking would be a series of concentric circles. These circles would reach the edges of the water puddle at the same frequency.`,
   l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
 };
 
 function App() {
-  const [sizesAmount, setSizesAmount] = useState(4);
+  const [sizesAmount, setSizesAmount] = useState(5);
   const [sizesIncrement, setSizesIncrement] = useState(1.3);
   const [baseFontSize, setBaseFontSize] = useState(0.9);
-  const [lineHeightBase, setLineHeightBase] = useState(0.85);
-  const [lineHeightRelativity, setLineHeightRelativity] = useState(0.6);
+  const [lineHeightBase, setLineHeightBase] = useState(0.25);
+  const [lineHeightRelativity, setLineHeightRelativity] = useState(1);
+  const [fontFamily, setFontFamily] = useState('system-ui');
 
   document.documentElement.style.setProperty(`--fontSize-0`, `baseFontSizerem`);
 
@@ -83,7 +124,6 @@ function App() {
     <div>
       <GlobalContainer>
         <SettingsSection>
-          <Logo>doppler</Logo>
           <SettingTitle>Line Height</SettingTitle>
           <Input
             type="number"
@@ -101,9 +141,14 @@ function App() {
             step=".01"
             sufix="em"
           />
-          <br />
-
-          <SettingTitle>Font Size</SettingTitle>
+          
+          <SettingTitle
+            style={{
+              marginTop: '0.5rem'
+            }}
+          >
+            Font
+          </SettingTitle>
           <Input
             type="number"
             onChange={e => setSizesAmount(e.target.value)}
@@ -122,34 +167,60 @@ function App() {
             onChange={e => setBaseFontSize(e.target.value)}
             value={baseFontSize}
             label="Base"
-            step=".1"
+            step=".01"
             sufix="rem"
           />
-          <br />
-          <CodeGetter 
+          <label>Font Family</label>
+          <FontFamilyInput
+            label="Base"
+            type="text"
+            onChange={e => setFontFamily(e.target.value)}
+            value={fontFamily}
+            placeholder="system-ui"
+            spellcheck="false"
+          />
+
+          <div
+            style={{
+              marginTop: '2rem'
+            }}
+          />
+
+          <CodeGetter
             lineHeightBase={lineHeightBase}
             lineHeightRelativity={lineHeightRelativity}
             sizesIncrement={sizesIncrement}
             sizesAmount={sizesAmount}
             baseFontSize={baseFontSize}
           />
+
+          <LogoSection>
+            <Logo>doppler</Logo>
+            Github
+            <br />
+            by Hayk
+          </LogoSection>
         </SettingsSection>
 
         <MainSection>
           {getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
             .reverse()
             .map((size, index) => (
-              <div
+              <DemoText
                 key={index}
+                contentEditable
+                spellcheck="false"
+                data-gramm_editor="false"
                 style={{
                   fontSize: `var(${size.name})`,
                   lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
                   maxWidth: "24em",
-                  marginBottom: "1.5rem"
+                  marginBottom: "1.5rem",
+                  fontFamily: fontFamily,
                 }}
               >
                 {text.m}
-              </div>
+              </DemoText>
             ))}
           </MainSection>
         </GlobalContainer>
