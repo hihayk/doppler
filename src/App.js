@@ -19,7 +19,7 @@ const Logo = styled.h1`
   font-weight: normal;
   opacity: 0.5;
   font-size: var(--dpl-fs-2);
-  margin: 0 0 0.5rem 0;
+  margin: 1.5rem 0 0.5rem 0;
 `
 
 const GlobalContainer = styled.div`
@@ -31,11 +31,12 @@ const SettingsSection = styled.div`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  min-height: 100vh;
+  height: 100vh;
   padding: var(--pagePaddingY) var(--pagePaddingX);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow: auto;
 
   @media (max-width: 800px) {
     background-color: hsla(0,0%,0%,0.2);
@@ -79,8 +80,8 @@ const FontFamilyInput = styled.input`
   border: none;
   color: inherit;
   max-width: 100%;
-  font-size: var(--dpl-fs-2);
   height: calc(1.2 * 1em);
+  background-color: transparent;
 
   &:hover {
     color: hsla(var(--c-accentHSL), 1);
@@ -99,8 +100,19 @@ const FontFamilyInput = styled.input`
   }
 `
 
+const Link = styled.a`
+  color: inherit;
+  text-decoration-color: hsla(0,0%,0%,0.3);
+  text-underline-position: under;
+
+  &:hover {
+    color: hsl(var(--c-accentHSL));
+    text-decoration-color: hsla(var(--c-accentHSL), 0.5);
+  }
+`
+
 const text = {
-  m: `The pattern produced by the bug's shaking would be a series of concentric circles. These circles would reach the edges of the water puddle at the same frequency.`,
+  m: `A pattern produced by the bug's shaking would be a series of concentric circles. These circles would reach the edges of the water puddle at the same frequency.`,
   l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
 };
 
@@ -128,6 +140,7 @@ function App() {
           <Input
             type="number"
             onChange={e => setLineHeightBase(e.target.value)}
+            onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 1)}
             value={lineHeightBase}
             label="Base"
             step=".01"
@@ -136,6 +149,7 @@ function App() {
           <Input
             type="number"
             onChange={e => setLineHeightRelativity(e.target.value)}
+            onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 1)}
             value={lineHeightRelativity}
             label="Relativity"
             step=".01"
@@ -152,12 +166,14 @@ function App() {
           <Input
             type="number"
             onChange={e => setSizesAmount(e.target.value)}
+            onBlur={e => setSizesAmount(e.target.value > 0 ? e.target.value : 1)}
             value={sizesAmount}
             label="Amount"
           />
           <Input
             type="number"
             onChange={e => setSizesIncrement(e.target.value)}
+            onBlur={e => setSizesIncrement(e.target.value > 0 ? e.target.value : 1)}
             value={sizesIncrement}
             label="Increment"
             step=".01"
@@ -165,6 +181,7 @@ function App() {
           <Input
             type="number"
             onChange={e => setBaseFontSize(e.target.value)}
+            onBlur={e => setBaseFontSize(e.target.value > 0 ? e.target.value : 1)}
             value={baseFontSize}
             label="Base"
             step=".01"
@@ -175,9 +192,14 @@ function App() {
             label="Base"
             type="text"
             onChange={e => setFontFamily(e.target.value)}
+            onBlur={e => setFontFamily(e.target.value === '' ? 'system-ui' : e.target.value )}
             value={fontFamily}
-            placeholder="system-ui"
-            spellcheck="false"
+            spellCheck="false"
+            style={{
+              fontSize: `
+                ${fontFamily.length > 13 ? '1.5rem' : 'var(--dpl-fs-2)'}
+              `
+            }}
           />
 
           <div
@@ -192,36 +214,42 @@ function App() {
             sizesIncrement={sizesIncrement}
             sizesAmount={sizesAmount}
             baseFontSize={baseFontSize}
+            fontFamily={fontFamily}
           />
 
           <LogoSection>
             <Logo>doppler</Logo>
-            Github
-            <br />
-            by Hayk
+            <Link href="https://hayk.design" target="_blank">by Hayk</Link> | <Link href="https://github.com/hihayk/doppler" target="_blank">Github</Link>
           </LogoSection>
         </SettingsSection>
 
-        <MainSection>
+        <MainSection id="banana">
           {getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
             .reverse()
-            .map((size, index) => (
-              <DemoText
-                key={index}
-                contentEditable
-                spellcheck="false"
-                data-gramm_editor="false"
-                style={{
-                  fontSize: `var(${size.name})`,
-                  lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
-                  maxWidth: "24em",
-                  marginBottom: "1.5rem",
-                  fontFamily: fontFamily,
-                }}
-              >
-                {text.m}
-              </DemoText>
-            ))}
+            .map((size, index) => {
+              return (
+                <div>
+                  {size.computedFS}px / {lineHeightBase * 16 + lineHeightRelativity * size.computedFS}px <span className="dimmed"> | {size.value}</span>
+                  <DemoText
+                    key={index}
+                    contentEditable
+                    spellcheck="false"
+                    data-gramm_editor="false"
+                    suppressContentEditableWarning
+                    style={{
+                      fontSize: `var(${size.name})`,
+                      lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
+                      maxWidth: "24em",
+                      marginTop: "0.5rem",
+                      marginBottom: "1.25rem",
+                      fontFamily: fontFamily,
+                    }}
+                  >
+                    {text.m}
+                  </DemoText>
+                </div>
+              )
+            })}
           </MainSection>
         </GlobalContainer>
     </div>

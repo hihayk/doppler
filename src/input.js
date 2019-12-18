@@ -22,6 +22,7 @@ const InputField = styled.input`
   background-color: transparent;
   appearance: textfield;
   margin: 0;
+  min-width: 0.25rem;
   ${props => props.isDisabled && `
     user-select: none;
     opacity: 0.4;
@@ -65,9 +66,10 @@ const InputLabel = styled.label`
 const InputRoot = styled.div`
   display: flex;
   margin: 0 0 0.8rem 0;
+  height: var(--dpl-fs-2);
 `
 
-const Input = ({ value, onChange, color, prefix, sufix, withRgbSlider, label, min, max, ...rest }) => {
+const Input = ({ value, placeholder, onChange, color, prefix, sufix, withRgbSlider, label, min, max, ...rest }) => {
   return (
     <div>
       <InputLabel htmlFor={label}>
@@ -76,21 +78,21 @@ const Input = ({ value, onChange, color, prefix, sufix, withRgbSlider, label, mi
 
       <InputRoot>
         <InputWrapper color={color}>
-          <InputField color={color} value={prefix} type='text' readOnly isDisabled tabIndex={-1} />
+          <InputField color={color} value={prefix} placeholder={placeholder} type='text' readOnly isDisabled tabIndex={-1} />
           <InputValue>
             {prefix}
           </InputValue>
         </InputWrapper>
 
         <InputWrapper color={color}>
-          <InputField color={color} value={value} onChange={onChange} {...rest} min={min} max={max} />
+          <InputField color={color} value={value} placeholder={placeholder} onChange={onChange} {...rest} min={min} max={max} />
           <InputValue>
             {value}
           </InputValue>
         </InputWrapper>
 
         <InputWrapper color={color}>
-          <InputField color={color} value={sufix} type='text' readOnly isDisabled tabIndex={-1} />
+          <InputField color={color} value={sufix} placeholder={placeholder} type='text' readOnly isDisabled tabIndex={-1} />
           <InputValue>
             {sufix}
           </InputValue>

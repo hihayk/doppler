@@ -16,12 +16,24 @@
   -webkit-box-sizing: border-box;
 }
 
+::-moz-selection {
+  background: hsl(var(--c-accentHS), 90%);
+  color: hsl(var(--c-accentHSL));
+}
+::selection {
+  background: hsl(var(--c-accentHS), 90%);
+  color: hsl(var(--c-accentHSL));
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--dpl-fs-0);
   line-height: 1.5;
   margin: 0;
   color: hsla(0,0%,20%,1);
+  background: hsl(var(--c-accentHS), 90%);
+  background: white;
+  color: hsl(var(--c-accentHS), 15%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "tnum";
@@ -30,4 +42,8 @@ body {
 code {
   font-size: 0.6rem;
   font-family: "Lucida Console", Monaco, monospace;
+}
+
+.dimmed {
+  opacity: 0.5;
 }

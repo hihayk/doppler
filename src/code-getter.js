@@ -13,14 +13,26 @@ const CodeContainer = styled.pre`
 `
 
 const CodeGetterButton = styled.button`
-  
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  border: 1px solid hsla(0,0%,80%);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:focus {
+    border-color: hsla(var(--c-accentHSL), 1);
+    color: hsla(var(--c-accentHSL), 1);
+    outline: none;
+  }
 `
 
 const CodeBackdrop = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   width: 100%;
   height: 100%;
   align-items: center;
@@ -29,7 +41,7 @@ const CodeBackdrop = styled.div`
   background-color: hsla(0,0%,0%,0.3);
 `
 
-const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizesAmount, baseFontSize}) => {
+const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizesAmount, baseFontSize, fontFamily}) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <React.Fragment>
@@ -54,10 +66,12 @@ ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
     }).join('')}
   --globalLineHeight: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
   --globalFontSize: var(--fontSize-0);
+  --globalFontFamily: ${fontFamily};
 }
 body {
   font-size: var(--globalFontSize);
   line-height: var(--globalLineHeight);
+  font-family: var(--globalFontFamily);
 }
 ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
   .reverse()

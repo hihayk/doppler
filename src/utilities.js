@@ -9,14 +9,17 @@ export const getFontSizes = (amount, base, increment) => {
     fontSizes[i] = {
       name: `--${getName(i)}`,
       value: `calc(var(--${getName(i - 1)}) * var(--sizesIncrement))`,
-      number: i
+      number: i,
+      computedFS: Math.round(base * Math.pow(increment, i) * 16)
     };
   }
+
 
   fontSizes[0] = {
     name: `--${getName(0)}`,
     value: `${base}rem`,
-    number: 0
+    number: 0,
+    computedFS: Math.round(base * 16)
   };
 
   document.documentElement.style.setProperty('--sizesIncrement', increment);
