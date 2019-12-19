@@ -20,6 +20,11 @@ const Logo = styled.h1`
   opacity: 0.5;
   font-size: var(--dpl-fs-2);
   margin: 1.5rem 0 0.5rem 0;
+
+  &:hover {
+    opacity: 1;
+    color: hsl(var(--c-accentHSL));
+  }
 `
 
 const LogoLink = styled.a`
@@ -138,7 +143,7 @@ const FontFamilyInput = styled.input`
 
 const Link = styled.a`
   color: inherit;
-  text-decoration-color: hsla(var(--c-accentHSL), 0.5);
+  text-decoration-color: hsla(var(--c-accentHS), 20%, 0.3);
   text-underline-position: under;
 
   &:hover {
@@ -414,7 +419,7 @@ function App() {
             .reverse()
             .map((size, index) => {
               return (
-                <div>
+                <div key={index}>
                   {showSpecs && (
                     <div>
                       <span>{size.computedFS}px / {Math.round(lineHeightBase * 16 + lineHeightRelativity * size.computedFS)}px</span>
@@ -423,7 +428,6 @@ function App() {
                   )}
 
                   <DemoText
-                    key={index}
                     contentEditable
                     spellcheck="false"
                     data-gramm_editor="false"
