@@ -112,6 +112,10 @@ const DemoText = styled.div`
   &:focus {
     outline: none;
   }
+
+  @media (max-width: 800px) {
+    pointer-events: none;
+  }
 `
 
 const FontFamilyInput = styled.input`
