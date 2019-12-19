@@ -12,7 +12,7 @@ const SettingTitle = styled.div`
 `
 
 const LogoSection = styled.div`
-  margin: auto 0 1.5rem 0;
+  margin: auto 0 0.5rem 0;
 `
 
 const Logo = styled.h1`
@@ -22,48 +22,84 @@ const Logo = styled.h1`
   margin: 1.5rem 0 0.5rem 0;
 `
 
+const LogoLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+`
+
 const GlobalContainer = styled.div`
   display: flex;
+  overflow: hidden;
+  max-height: 100vh;
 `
 
 const SettingsSection = styled.div`
-  width: 20vw;
+  width: calc(3vw + 15rem);
+  min-width: 15rem;
+  flex-shrink: 0;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  position: relative;
   height: 100vh;
-  padding: var(--pagePaddingY) var(--pagePaddingX);
+  max-height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   overflow: auto;
 
   @media (max-width: 800px) {
-    background-color: hsla(0,0%,0%,0.2);
     position: fixed;
     width: 80vw;
-    z-index: 0;
+    
 
     &:active {
       z-index: 2;
     }
     &:hover {
       z-index: 2;
-      background-color: white;
-      box-shadow: 80vw 0 hsla(0,0%,0%,0.2);
+      background-color: var(--background);
+      box-shadow: 80vw 0 var(--backdrop);
     }
   }
 `
 
+const MainSettings = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: auto;
+  padding: var(--pagePaddingY) var(--pagePaddingX);
+`
+
+const PreviewSettings = styled.div`
+  width: 2rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  padding: var(--pagePaddingY) 0;
+  
+  @media (max-width: 800px) {
+    width: 4rem;
+  }
+`
+
 const MainSection = styled.div`
+  flex-grow: 1;
   padding: 5vw var(--pagePaddingX);
+  background-color: var(--background);
+  position: relative;
+  overflow: auto;
 
   @media (max-width: 800px) {
-    background-color: white;
-    position: absolute;
-    right: 0;
     width: 80vw;
-    z-index: 1;
+    position: fixed;
+    right: 0;
+    box-shadow: -80vw 0 var(--backdrop);
+    height: 100%;
   }
 `
 
@@ -102,7 +138,7 @@ const FontFamilyInput = styled.input`
 
 const Link = styled.a`
   color: inherit;
-  text-decoration-color: hsla(0,0%,0%,0.3);
+  text-decoration-color: hsla(var(--c-accentHSL), 0.5);
   text-underline-position: under;
 
   &:hover {
@@ -111,9 +147,131 @@ const Link = styled.a`
   }
 `
 
+const DarkThemeButton = styled.button`
+  appearance: none;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: var(--body);
+  border: none;
+
+  &:focus {
+    outline: none;
+    background-color: hsl(var(--c-accentHSL));
+  }
+`
+
+const LightThemeButton = styled.button`
+  appearance: none;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: transparent;
+  border: 1px solid var(--body);
+
+  &:focus {
+    outline: none;
+    border-color: hsl(var(--c-accentHSL));
+  }
+`
+
+const ContentButtonWrapper = styled.button`
+  appearance: none;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: transparent;
+  
+  &:focus {
+    outline: none;
+
+    &  > * {
+      background-color: hsl(var(--c-accentHSL));
+    }
+  }
+
+  & > * {
+    background-color: var(--body);
+  }
+`
+
+const ContentButtonLine = styled.span`
+  width: 2rem;
+`
+
+const ContentButton = ({...props}) => (
+  <ContentButtonWrapper {...props}>
+    <ContentButtonLine style={{ height: 8, marginBottom: 4 }} />
+    <ContentButtonLine style={{ height: 5, width: 24, marginBottom: 3 }} />
+    <ContentButtonLine style={{ height: 2, width: 16 }} />
+  </ContentButtonWrapper>
+)
+
+const SpecsButtonWrapper = styled.button`
+  appearance: none;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  background-color: transparent;
+  color: var(--body);
+  
+  &:focus {
+    outline: none;
+
+    &  > * {
+      color: hsl(var(--c-accentHSL));
+    }
+  }
+
+  & > * {
+    border-color: var(--body);
+  }
+`
+
+const SpecsButtonLine = styled.span`
+  width: 1rem;
+  height: 2rem;
+  border: 1px solid currentColor;
+  border-width: 1px 0 1px 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 8px;
+`
+
+const SpecsButtonSquare = styled.span`
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid currentColor;
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+`
+
+const SpecsButton = ({...props}) => (
+  <SpecsButtonWrapper {...props}>
+    <SpecsButtonSquare />
+    <SpecsButtonLine />
+    <SpecsButtonLine style={{ transform: 'rotate(90deg)', left: 8, top: 0 }} />
+  </SpecsButtonWrapper>
+)
+
 const text = {
-  m: `A pattern produced by the bug's shaking would be a series of concentric circles. These circles would reach the edges of the water puddle at the same frequency.`,
-  l: `Inflite CF SLX 9.0 Team - Ride in the colours of cyclocross superstar Mathieu van der Poel and the Corendon Circus Team – equipped with the latest Shimano Ultegra Di2 RX groupset, this is a brilliant bike to tackle the cross season with.`
+  l: `A pattern produced by the bug's shaking would be a series of concentric circles. These circles would reach the edges of the water puddle at the same frequency.`,
+  s: `Aa Bb Cc 123`
 };
 
 function App() {
@@ -123,6 +281,10 @@ function App() {
   const [lineHeightBase, setLineHeightBase] = useState(0.25);
   const [lineHeightRelativity, setLineHeightRelativity] = useState(1);
   const [fontFamily, setFontFamily] = useState('system-ui');
+  
+  const [theme, setTheme] = useState('light');
+  const [showSpecs, setShowSpecs] = useState(true);
+  const [longContent, setLongContent] = useState(true);
 
   document.documentElement.style.setProperty(`--fontSize-0`, `baseFontSizerem`);
 
@@ -132,104 +294,134 @@ function App() {
 
   getFontSizes(sizesAmount, baseFontSize, sizesIncrement);
 
+  const bodyClassList = document.body.classList
+
+  if(theme === 'light') {
+    bodyClassList.add(`theme-light`);
+    bodyClassList.remove(`theme-dark`);
+  }
+  if(theme === 'dark') {
+    bodyClassList.add(`theme-dark`);
+    bodyClassList.remove(`theme-light`);
+  }
+
   return (
     <div>
       <GlobalContainer>
         <SettingsSection>
-          <SettingTitle>Line Height</SettingTitle>
-          <Input
-            type="number"
-            onChange={e => setLineHeightBase(e.target.value)}
-            onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 1)}
-            value={lineHeightBase}
-            label="Base"
-            step=".01"
-            sufix="rem"
-          />
-          <Input
-            type="number"
-            onChange={e => setLineHeightRelativity(e.target.value)}
-            onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 1)}
-            value={lineHeightRelativity}
-            label="Relativity"
-            step=".01"
-            sufix="em"
-          />
-          
-          <SettingTitle
-            style={{
-              marginTop: '0.5rem'
-            }}
-          >
-            Font
-          </SettingTitle>
-          <Input
-            type="number"
-            onChange={e => setSizesAmount(e.target.value)}
-            onBlur={e => setSizesAmount(e.target.value > 0 ? e.target.value : 1)}
-            value={sizesAmount}
-            label="Amount"
-          />
-          <Input
-            type="number"
-            onChange={e => setSizesIncrement(e.target.value)}
-            onBlur={e => setSizesIncrement(e.target.value > 0 ? e.target.value : 1)}
-            value={sizesIncrement}
-            label="Increment"
-            step=".01"
-          />
-          <Input
-            type="number"
-            onChange={e => setBaseFontSize(e.target.value)}
-            onBlur={e => setBaseFontSize(e.target.value > 0 ? e.target.value : 1)}
-            value={baseFontSize}
-            label="Base"
-            step=".01"
-            sufix="rem"
-          />
-          <label>Font Family</label>
-          <FontFamilyInput
-            label="Base"
-            type="text"
-            onChange={e => setFontFamily(e.target.value)}
-            onBlur={e => setFontFamily(e.target.value === '' ? 'system-ui' : e.target.value )}
-            value={fontFamily}
-            spellCheck="false"
-            style={{
-              fontSize: `
-                ${fontFamily.length > 13 ? '1.5rem' : 'var(--dpl-fs-2)'}
-              `
-            }}
-          />
+          <MainSettings>
+            <SettingTitle>Line Height</SettingTitle>
+            <Input
+              type="number"
+              onChange={e => setLineHeightBase(e.target.value)}
+              onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 1)}
+              value={lineHeightBase}
+              label="Base"
+              step=".01"
+              sufix="rem"
+            />
+            <Input
+              type="number"
+              onChange={e => setLineHeightRelativity(e.target.value)}
+              onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 1)}
+              value={lineHeightRelativity}
+              label="Relativity"
+              step=".01"
+              sufix="em"
+            />
+            
+            <SettingTitle
+              style={{
+                marginTop: '0.5rem'
+              }}
+            >
+              Font
+            </SettingTitle>
+            <Input
+              type="number"
+              onChange={e => setSizesAmount(e.target.value)}
+              onBlur={e => setSizesAmount(e.target.value > 0 ? e.target.value : 1)}
+              value={sizesAmount}
+              label="Amount"
+            />
+            <Input
+              type="number"
+              onChange={e => setSizesIncrement(e.target.value)}
+              onBlur={e => setSizesIncrement(e.target.value > 0 ? e.target.value : 1)}
+              value={sizesIncrement}
+              label="Increment"
+              step=".01"
+            />
+            <Input
+              type="number"
+              onChange={e => setBaseFontSize(e.target.value)}
+              onBlur={e => setBaseFontSize(e.target.value > 0 ? e.target.value : 1)}
+              value={baseFontSize}
+              label="Base"
+              step=".01"
+              sufix="rem"
+            />
+            <label>Font Family</label>
+            <FontFamilyInput
+              label="Base"
+              type="text"
+              onChange={e => setFontFamily(e.target.value)}
+              onBlur={e => setFontFamily(e.target.value === '' ? 'system-ui' : e.target.value )}
+              value={fontFamily}
+              spellCheck="false"
+              style={{
+                fontSize: `
+                  ${fontFamily.length > 13 ? '1.5rem' : 'var(--dpl-fs-2)'}
+                `
+              }}
+            />
 
-          <div
-            style={{
-              marginTop: '2rem'
-            }}
-          />
+            <div
+              style={{
+                marginTop: '2rem'
+              }}
+            />
 
-          <CodeGetter
-            lineHeightBase={lineHeightBase}
-            lineHeightRelativity={lineHeightRelativity}
-            sizesIncrement={sizesIncrement}
-            sizesAmount={sizesAmount}
-            baseFontSize={baseFontSize}
-            fontFamily={fontFamily}
-          />
+            <CodeGetter
+              lineHeightBase={lineHeightBase}
+              lineHeightRelativity={lineHeightRelativity}
+              sizesIncrement={sizesIncrement}
+              sizesAmount={sizesAmount}
+              baseFontSize={baseFontSize}
+              fontFamily={fontFamily}
+            />
 
-          <LogoSection>
-            <Logo>doppler</Logo>
-            <Link href="https://hayk.design" target="_blank">by Hayk</Link> | <Link href="https://github.com/hihayk/doppler" target="_blank">Github</Link>
-          </LogoSection>
+            <LogoSection>
+              <Logo>
+                <LogoLink href="/">doppler</LogoLink>
+              </Logo>
+              <Link href="https://hayk.design" target="_blank">by Hayk</Link> | <Link href="https://github.com/hihayk/doppler" target="_blank">Github</Link>
+            </LogoSection>
+          </MainSettings>
+          <PreviewSettings>
+            <DarkThemeButton onClick={() => setTheme('dark')}/>
+            <div style={{ marginTop: '0.5rem' }} />
+            <LightThemeButton onClick={() => setTheme('light')} />
+            {/* <div style={{ marginTop: '2rem' }} />
+            <ContentButton onClick={() => setLongContent(!longContent)} /> */}
+            <div style={{ marginTop: '2rem' }} />
+            <SpecsButton onClick={() => setShowSpecs(!showSpecs)} />
+          </PreviewSettings>
         </SettingsSection>
 
-        <MainSection id="banana">
+        <MainSection>
           {getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
             .reverse()
             .map((size, index) => {
               return (
                 <div>
-                  {size.computedFS}px / {lineHeightBase * 16 + lineHeightRelativity * size.computedFS}px <span className="dimmed"> | {size.value}</span>
+                  {showSpecs && (
+                    <div>
+                      <span>{size.computedFS}px / {Math.round(lineHeightBase * 16 + lineHeightRelativity * size.computedFS)}px</span>
+                      <span className="dimmed"> | {size.value}</span>
+                    </div>
+                  )}
+
                   <DemoText
                     key={index}
                     contentEditable
@@ -245,7 +437,7 @@ function App() {
                       fontFamily: fontFamily,
                     }}
                   >
-                    {text.m}
+                    {longContent ? text.l : text.s}
                   </DemoText>
                 </div>
               )

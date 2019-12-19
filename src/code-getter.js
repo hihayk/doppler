@@ -6,8 +6,8 @@ const lineBreak = `
 `
 
 const CodeContainer = styled.pre`
-  background-color: hsla(0,0%,100%,1);
-  padding: calc(var(--pagePaddingX) / 1.5);
+  background-color: var(--background);
+  padding: var(--pagePaddingX);
   overflow: auto;
   max-height: 100%;
 `
@@ -16,7 +16,7 @@ const CodeGetterButton = styled.button`
   appearance: none;
   font: inherit;
   color: inherit;
-  border: 1px solid hsla(0,0%,80%);
+  border: 1px solid hsla(var(--c-accentH), 40%, 40%, 0.5);
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   background-color: transparent;
@@ -38,7 +38,12 @@ const CodeBackdrop = styled.div`
   align-items: center;
   justify-content: center;
   padding: var(--pagePaddingY) var(--pagePaddingX);
-  background-color: hsla(0,0%,0%,0.3);
+  background-color: var(--backdrop);
+
+  @media (max-width: 800px) {
+    padding: 0;
+    padding-top: 40vw;
+  }
 `
 
 const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizesAmount, baseFontSize, fontFamily}) => {
