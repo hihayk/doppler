@@ -141,6 +141,39 @@ const FontFamilyInput = styled.input`
   }
 `
 
+const Letter = styled.button`
+  font: inherit;
+  padding: 0;
+  color: hsla(var(--c-accentH), 20%, 60%, 1);
+  background-color: var(--overlay);
+  border: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-family: ${props => props.variant === "serif" ? 'georgia' : 'arial'};
+  font-size: 3rem;
+  border-radius: 1.5rem;
+  margin-right: 0.25rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    color: hsla(var(--c-accentHSL), 1);
+  }
+  &:focus {
+    outline: none;
+    color: hsla(var(--c-accentHSL), 1);
+  }
+
+  &:after {
+    content: 'i';
+    display: block;
+    position: absolute;
+    bottom: -0.7rem;
+    left: ${props => props.variant === "serif" ? '0.2rem' : '0.3rem'};
+  }
+`
+
 const Link = styled.a`
   color: inherit;
   text-decoration-color: hsla(var(--c-accentHS), 20%, 0.3);
@@ -321,7 +354,7 @@ function App() {
               onChange={e => setLineHeightBase(e.target.value)}
               onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 1)}
               value={lineHeightBase}
-              label="Base"
+              label="Fixed value"
               step=".01"
               sufix="rem"
             />
@@ -330,7 +363,7 @@ function App() {
               onChange={e => setLineHeightRelativity(e.target.value)}
               onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 1)}
               value={lineHeightRelativity}
-              label="Relativity"
+              label="Relative value"
               step=".01"
               sufix="em"
             />
@@ -381,11 +414,12 @@ function App() {
               }}
             />
 
-            <div
-              style={{
-                marginTop: '2rem'
-              }}
-            />
+            <div style={{ display: 'flex', marginTop: '0.5rem' }}>
+              <Letter variant="serif" onClick={() => setFontFamily('georgia')} />
+              <Letter onClick={() => setFontFamily('system-ui')} />
+            </div>
+            
+            <div style={{ marginTop: '2rem' }} />
 
             <CodeGetter
               lineHeightBase={lineHeightBase}

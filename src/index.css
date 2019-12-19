@@ -15,12 +15,14 @@
   --body: hsl(var(--c-accentHS), 15%);
   --background: white;
   --backdrop: hsla(var(--c-accentH), 5%, 10%, 0.5);
+  --overlay: hsla(var(--c-accentH), 20%, 90%, 1);
 }
 
 .theme-dark {
   --body: hsl(var(--c-accentHS), 85%);
   --background: hsl(var(--c-accentH), 30%, 4%);;
   --backdrop: hsla(var(--c-accentH), 5%, 10%, 0.8);
+  --overlay: hsla(var(--c-accentH), 20%, 20%, 1);
 }
 
 *, :after, :before {
