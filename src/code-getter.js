@@ -12,7 +12,7 @@ const CodeContainer = styled.pre`
   max-height: 100%;
 `
 
-const CodeGetterButton = styled.button`
+export const Button = styled.button`
   appearance: none;
   font: inherit;
   color: inherit;
@@ -50,7 +50,7 @@ const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizes
   const [isOpen, setIsOpen] = useState(false);
   return (
     <React.Fragment>
-      <CodeGetterButton onClick={() => setIsOpen(!isOpen)}>Get CSS</CodeGetterButton>
+      <Button onClick={() => setIsOpen(!isOpen)}>Get CSS</Button>
       
       
       <CodeBackdrop
@@ -72,6 +72,9 @@ ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
   --globalLineHeight: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
   --globalFontSize: var(--fontSize-0);
   --globalFontFamily: ${fontFamily};
+}
+html {
+  font-size: 100%;
 }
 body {
   font-size: var(--globalFontSize);

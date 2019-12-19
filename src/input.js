@@ -69,12 +69,48 @@ const InputRoot = styled.div`
   height: var(--dpl-fs-2);
 `
 
-const Input = ({ value, placeholder, onChange, color, prefix, sufix, withRgbSlider, label, min, max, ...rest }) => {
+const Helper = styled.span`
+  position: absolute;
+  left: 9rem;
+  width: 20rem;
+  padding-left: 2rem;
+  top: 0;
+
+  &:before {
+    content: '';
+    width: 1rem;
+    height: 1px;
+    background-color: currentColor;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+  }
+`
+
+const Input = ({
+  value,
+  placeholder,
+  onChange,
+  color,
+  prefix,
+  sufix,
+  withRgbSlider,
+  label,
+  min,
+  max,
+  helper,
+  ...rest
+}) => {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <InputLabel htmlFor={label}>
         {label}
       </InputLabel>
+
+      
+      <Helper style={{display: !helper && 'none' }}>{helper}</Helper>
+      
 
       <InputRoot>
         <InputWrapper color={color}>

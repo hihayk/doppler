@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Input from './input';
 import styled from 'styled-components';
-import CodeGetter from './code-getter';
+import CodeGetter, { Button } from './code-getter';
 import { getFontSizes } from './utilities';
 
 const SettingTitle = styled.div`
@@ -303,6 +303,12 @@ const SpecsButtonSquare = styled.span`
   left: 8px;
 `
 
+const HelpButtonSection = styled.span`
+  @media (max-width: 800px) {
+    display: none;
+  }
+`
+
 const SpecsButton = ({...props}) => (
   <SpecsButtonWrapper {...props}>
     <SpecsButtonSquare />
@@ -327,6 +333,8 @@ function App() {
   const [theme, setTheme] = useState('light');
   const [showSpecs, setShowSpecs] = useState(true);
   const [longContent, setLongContent] = useState(true);
+  
+  const [helpIsVisible, setHelpIsVisible] = useState(false);
 
   document.documentElement.style.setProperty(`--fontSize-0`, `baseFontSizerem`);
 
@@ -350,7 +358,9 @@ function App() {
   return (
     <div>
       <GlobalContainer>
-        <SettingsSection>
+        <SettingsSection
+          style={{ width: helpIsVisible && '40rem' }}
+        >
           <MainSettings>
             <SettingTitle>Line Height</SettingTitle>
             <Input
@@ -361,6 +371,7 @@ function App() {
               label="Fixed value"
               step=".01"
               sufix="rem"
+              helper={helpIsVisible && "This value is fixed: 1rem = 16px. This value will add a fixed ampout to the line height."}
             />
             <Input
               type="number"
@@ -370,6 +381,7 @@ function App() {
               label="Relative value"
               step=".01"
               sufix="em"
+              helper={helpIsVisible && "This value is relative to the font size: 1em = current font size. For example if the font size is 10px, 1em line height will result in 10px, and 1.5em will result in 15px. Use this value to control how drastic is the line height change."}
             />
             
             <SettingTitle
@@ -385,6 +397,7 @@ function App() {
               onBlur={e => setSizesAmount(e.target.value > 0 ? e.target.value : 1)}
               value={sizesAmount}
               label="Amount"
+              helper={helpIsVisible && "The amount of font sizes."}
             />
             <Input
               type="number"
@@ -393,6 +406,7 @@ function App() {
               value={sizesIncrement}
               label="Increment"
               step=".01"
+              helper={helpIsVisible && "The amount of increment in each font size step."}
             />
             <Input
               type="number"
@@ -402,6 +416,7 @@ function App() {
               label="Base"
               step=".01"
               sufix="rem"
+              helper={helpIsVisible && "The size of the smallest font size in the scale."}
             />
             <label>Font Family</label>
             <FontFamilyInput
@@ -434,9 +449,23 @@ function App() {
               fontFamily={fontFamily}
             />
 
+            <div style={{ marginTop: '0.5rem' }} />
+            
+            <HelpButtonSection>
+              <Button
+                onClick={() => setHelpIsVisible(!helpIsVisible)}
+                style={{
+                  backgroundColor: helpIsVisible && 'hsl(var(--c-accentHSL))',
+                  color: helpIsVisible && 'hsl(var(--c-accentHS), 98%)',
+                }}
+                >
+                ¯\_(ツ)_/¯
+              </Button>
+            </HelpButtonSection>
+
             <LogoSection>
               <Logo>
-                <LogoLink href="/">doppler</LogoLink>
+                <LogoLink href="https://hihayk.github.io/doppler">doppler</LogoLink>
               </Logo>
               <Link href="https://hayk.design" target="_blank">by Hayk</Link> | <Link href="https://github.com/hihayk/doppler" target="_blank">Github</Link>
             </LogoSection>
