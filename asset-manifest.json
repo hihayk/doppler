@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/doppler/static/css/main.2c302d21.chunk.css",
+    "main.js": "/doppler/static/js/main.80890156.chunk.js",
+    "main.js.map": "/doppler/static/js/main.80890156.chunk.js.map",
+    "runtime-main.js": "/doppler/static/js/runtime-main.88257859.js",
+    "runtime-main.js.map": "/doppler/static/js/runtime-main.88257859.js.map",
+    "static/js/2.3482e1ff.chunk.js": "/doppler/static/js/2.3482e1ff.chunk.js",
+    "static/js/2.3482e1ff.chunk.js.map": "/doppler/static/js/2.3482e1ff.chunk.js.map",
+    "index.html": "/doppler/index.html",
+    "precache-manifest.32e80b21b3f001e81199ff9fd3e7b949.js": "/doppler/precache-manifest.32e80b21b3f001e81199ff9fd3e7b949.js",
+    "service-worker.js": "/doppler/service-worker.js",
+    "static/css/main.2c302d21.chunk.css.map": "/doppler/static/css/main.2c302d21.chunk.css.map",
+    "static/js/2.3482e1ff.chunk.js.LICENSE": "/doppler/static/js/2.3482e1ff.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.88257859.js",
+    "static/js/2.3482e1ff.chunk.js",
+    "static/css/main.2c302d21.chunk.css",
+    "static/js/main.80890156.chunk.js"
+  ]
+}
