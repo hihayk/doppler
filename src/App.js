@@ -325,8 +325,8 @@ function App() {
   const [sizesAmount, setSizesAmount] = useState(5);
   const [sizesIncrement, setSizesIncrement] = useState(1.3);
   const [baseFontSize, setBaseFontSize] = useState(0.9);
-  const [lineHeightBase, setLineHeightBase] = useState(0.25);
-  const [lineHeightRelativity, setLineHeightRelativity] = useState(1);
+  const [lineHeightFixedAmount, setlineHeightFixedAmount] = useState(0.25);
+  const [lineHeightRelativeAmount, setlineHeightRelativeAmount] = useState(1);
   const [fontFamily, setFontFamily] = useState('system-ui');
   
   const [theme, setTheme] = useState('light');
@@ -364,20 +364,20 @@ function App() {
             <SettingTitle>Line Height</SettingTitle>
             <Input
               type="number"
-              onChange={e => setLineHeightBase(e.target.value)}
-              onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 0)}
-              value={lineHeightBase}
-              label="Fixed value"
+              onChange={e => setlineHeightFixedAmount(e.target.value)}
+              onBlur={e => setlineHeightFixedAmount(e.target.value > 0 ? e.target.value : 0)}
+              value={lineHeightFixedAmount}
+              label="Fixed amount"
               step=".01"
               sufix="rem"
               helper={helpIsVisible && "This value is fixed: 1rem = 16px. This value will add a fixed ampout to the line height."}
             />
             <Input
               type="number"
-              onChange={e => setLineHeightRelativity(e.target.value)}
-              onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 0)}
-              value={lineHeightRelativity}
-              label="Relative value"
+              onChange={e => setlineHeightRelativeAmount(e.target.value)}
+              onBlur={e => setlineHeightRelativeAmount(e.target.value > 0 ? e.target.value : 0)}
+              value={lineHeightRelativeAmount}
+              label="Relative amount"
               step=".01"
               sufix="em"
               helper={helpIsVisible && "This value is relative to the font size: 1em = current font size. For example if the font size is 10px, 1em line height will result in 10px, and 1.5em will result in 15px. Use this value to control how drastic is the line height change."}
@@ -395,7 +395,7 @@ function App() {
               onChange={e => setSizesAmount(e.target.value)}
               onBlur={e => setSizesAmount(e.target.value > 0 ? e.target.value : 1)}
               value={sizesAmount}
-              label="Amount"
+              label="Sizes amount"
               helper={helpIsVisible && "The amount of font sizes."}
             />
             <Input
@@ -403,7 +403,7 @@ function App() {
               onChange={e => setSizesIncrement(e.target.value)}
               onBlur={e => setSizesIncrement(e.target.value > 0 ? e.target.value : 1)}
               value={sizesIncrement}
-              label="Increment"
+              label="Step increment"
               step=".01"
               helper={helpIsVisible && "The amount of increment in each font size step."}
             />
@@ -412,12 +412,12 @@ function App() {
               onChange={e => setBaseFontSize(e.target.value)}
               onBlur={e => setBaseFontSize(e.target.value > 0 ? e.target.value : 1)}
               value={baseFontSize}
-              label="Base"
+              label="Base font size"
               step=".01"
               sufix="rem"
               helper={helpIsVisible && "The size of the smallest font size in the scale."}
             />
-            <label>Font Family</label>
+            <label>Font family</label>
             <FontFamilyInput
               label="Base"
               type="text"
@@ -440,8 +440,8 @@ function App() {
             <div style={{ marginTop: '2rem' }} />
 
             <CodeGetter
-              lineHeightBase={lineHeightBase}
-              lineHeightRelativity={lineHeightRelativity}
+              lineHeightFixedAmount={lineHeightFixedAmount}
+              lineHeightRelativeAmount={lineHeightRelativeAmount}
               sizesIncrement={sizesIncrement}
               sizesAmount={sizesAmount}
               baseFontSize={baseFontSize}
@@ -488,7 +488,7 @@ function App() {
                 <div key={index}>
                   {showSpecs && (
                     <div>
-                      <span>{size.computedFS}px / {Math.round(lineHeightBase * 16 + lineHeightRelativity * size.computedFS)}px</span>
+                      <span>{size.computedFS}px / {Math.round(lineHeightFixedAmount * 16 + lineHeightRelativeAmount * size.computedFS)}px</span>
                       <span className="dimmed"> | {size.value}</span>
                     </div>
                   )}
@@ -500,7 +500,7 @@ function App() {
                     suppressContentEditableWarning
                     style={{
                       fontSize: `var(${size.name})`,
-                      lineHeight: `calc(${lineHeightBase}rem + ${lineHeightRelativity}em)`,
+                      lineHeight: `calc(${lineHeightFixedAmount}rem + ${lineHeightRelativeAmount}em)`,
                       maxWidth: "24em",
                       marginTop: "0.5rem",
                       marginBottom: "1.25rem",

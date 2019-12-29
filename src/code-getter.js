@@ -46,7 +46,7 @@ const CodeBackdrop = styled.div`
   }
 `
 
-const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizesAmount, baseFontSize, fontFamily}) => {
+const CodeGetter = ({lineHeightFixedAmount, lineHeightRelativeAmount, sizesIncrement, sizesAmount, baseFontSize, fontFamily}) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <React.Fragment>
@@ -60,8 +60,8 @@ const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizes
         <CodeContainer onClick={(e) => e.stopPropagation()}>
           <code>
               {`:root {
-  --lineHeightBase: ${lineHeightBase}rem;
-  --lineHeightRelativity: ${lineHeightRelativity}em;
+  --lineHeightFixedAmount: ${lineHeightFixedAmount}rem;
+  --lineHeightRelativeAmount: ${lineHeightRelativeAmount}em;
   --sizesIncrement: ${sizesIncrement};
 
 ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
@@ -69,9 +69,12 @@ ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
     .map((size) => {
       return `  ${size.name}: ${size.value}; ${lineBreak}`
     }).join('')}
-  --globalLineHeight: calc(var(--lineHeightBase) + var(--lineHeightRelativity));
+  --globalLineHeight: calc(var(--lineHeightFixedAmount) + var(--lineHeightRelativeAmount));
   --globalFontSize: var(--fontSize-0);
   --globalFontFamily: ${fontFamily};
+}
+* {
+  line-height: var(--globalLineHeight);
 }
 html {
   font-size: 100%;
@@ -79,9 +82,6 @@ html {
 body {
   font-size: var(--globalFontSize);
   font-family: var(--globalFontFamily);
-}
-body * {
-  line-height: var(--globalLineHeight);
 }
 ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
   .reverse()
