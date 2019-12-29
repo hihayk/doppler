@@ -50,7 +50,7 @@ const CodeGetter = ({lineHeightBase, lineHeightRelativity, sizesIncrement, sizes
   const [isOpen, setIsOpen] = useState(false);
   return (
     <React.Fragment>
-      <Button onClick={() => setIsOpen(!isOpen)}>Get CSS</Button>
+      <Button onClick={() => setIsOpen(!isOpen)}>Get the CSS</Button>
       
       
       <CodeBackdrop
@@ -78,15 +78,16 @@ html {
 }
 body {
   font-size: var(--globalFontSize);
-  line-height: var(--globalLineHeight);
   font-family: var(--globalFontFamily);
+}
+body * {
+  line-height: var(--globalLineHeight);
 }
 ${getFontSizes(sizesAmount, baseFontSize, sizesIncrement)
   .reverse()
   .map((size) => {
     return `.textSize-${size.number} {
   font-size: var(${size.name});
-  line-height: var(--globalLineHeight);
 }
 `
   }).join('')

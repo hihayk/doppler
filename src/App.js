@@ -16,8 +16,7 @@ const LogoSection = styled.div`
 `
 
 const Logo = styled.h1`
-  font-weight: normal;
-  opacity: 0.5;
+  font-weight: 400;
   font-size: var(--dpl-fs-2);
   margin: 1.5rem 0 0.5rem 0;
 
@@ -366,7 +365,7 @@ function App() {
             <Input
               type="number"
               onChange={e => setLineHeightBase(e.target.value)}
-              onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 1)}
+              onBlur={e => setLineHeightBase(e.target.value > 0 ? e.target.value : 0)}
               value={lineHeightBase}
               label="Fixed value"
               step=".01"
@@ -376,7 +375,7 @@ function App() {
             <Input
               type="number"
               onChange={e => setLineHeightRelativity(e.target.value)}
-              onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 1)}
+              onBlur={e => setLineHeightRelativity(e.target.value > 0 ? e.target.value : 0)}
               value={lineHeightRelativity}
               label="Relative value"
               step=".01"
