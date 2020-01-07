@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/doppler/precache-manifest.c3cdb8ff695f80e790ab6467464e1ffb.js"
+  "/doppler/precache-manifest.93bf1fc5bbc983f84538103a39a20513.js"
 );
 
 self.addEventListener('message', (event) => {
