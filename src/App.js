@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Input from './input';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import CodeGetter, { Button } from './code-getter';
 import { getFontSizes } from './utilities';
 
@@ -465,6 +465,7 @@ function App() {
             <LogoSection>
               <Logo>
                 <LogoLink href="https://hihayk.github.io/doppler">doppler</LogoLink>
+                <span style={{ opacity: 0 }}>—</span>
               </Logo>
               <Link href="https://hayk.design" target="_blank">by Hayk</Link> | <Link href="https://github.com/hihayk/doppler" target="_blank">Github</Link>
             </LogoSection>
